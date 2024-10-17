@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import CarouselSlider from './components/CarouselSlider.vue'
 </script>
 
 <template>
-  <div>default</div>
+  <CarouselSlider />
 </template>
 
 <style scoped></style>
