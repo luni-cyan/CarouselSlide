@@ -37,7 +37,7 @@ const sliderList = [
 
 function sliderHandler() {
   const state = Flip.getState('.main-area')
-  const headerImage = document.querySelector(`.header-image${headerIndex.value + 1}`)
+  const headerImage = document.querySelector('.header-image')
   const buttonImage = document.querySelector(`.button-image${sliderIndex.value + 1}`)
   const leafImage = gsap.utils.toArray('.leaf-image')
   const leafGroup1Image1 = leafImage[0]
@@ -58,9 +58,9 @@ function sliderHandler() {
     tl.to(shadowImage2, { right: 0, bottom: 100 })
       .to(shadowImage3, { right: 850, bottom: 250 }, '<')
     gsap.to('.background-slider', { xPercent: -100, ease: 'power2.in' })
-    gsap.to('.can-labels', { x: -320 })
+    gsap.to('.can-labels-image', { x: -320 })
     gsap.timeline().to('.fruit-3', { yPercent: 100, ease: 'power2.in' }).to('.fruit-2', { yPercent: 100, ease: 'power2.in' }, '<').to('.fruit-1', { yPercent: 100, ease: 'power2.in' }, '<')
-    gsap.to([headerImage, buttonImage], { opacity: 0.8 })
+    gsap.to([headerImage, buttonImage], { opacity: 0.6 })
     sliderIndex.value = 1
     headerIndex.value = 1
   }
@@ -72,9 +72,9 @@ function sliderHandler() {
       .to(shadowImage3, { right: 400, bottom: 200, yoyo: true, repeat: 1, duration: 0.3 }, '<')
 
     gsap.to('.background-slider', { xPercent: -200, ease: 'power2.in' })
-    gsap.to('.can-labels', { x: -640 })
+    gsap.to('.can-labels-image', { x: -640 })
     gsap.timeline().to('.fruit-3', { yPercent: -100, ease: 'power2.out' }).to('.fruit-2', { yPercent: 200, ease: 'power2.in' }, '<').to('.fruit-1', { yPercent: 200, ease: 'power2.in' }, '<')
-    gsap.to([headerImage, buttonImage], { opacity: 0.8 })
+    gsap.to([headerImage, buttonImage], { opacity: 0.6 })
 
     sliderIndex.value = 2
     headerIndex.value = 1
@@ -84,9 +84,9 @@ function sliderHandler() {
     tl.to(shadowImage1, { right: 80, bottom: 220 }).to(shadowImage2, { right: 850, bottom: 250 }, '<').to(shadowImage3, { right: 350, bottom: 180 }, '<').set(shadowImage1, { right: 0, bottom: 220 }).set(shadowImage3, { right: 330, bottom: 220 }, '<').to(shadowImage1, { right: 100, bottom: 170 }).to(shadowImage3, { right: 180, bottom: 300 }, '<')
 
     gsap.to('.background-slider', { xPercent: 0, ease: 'power2.Out' })
-    gsap.to('.can-labels', { x: 0 })
+    gsap.to('.can-labels-image', { x: 0 })
     gsap.timeline().to('.fruit-3', { yPercent: 0, ease: 'power2.in' }).to('.fruit-2', { yPercent: 0, ease: 'power2.out' }, '<').to('.fruit-1', { yPercent: 0, ease: 'power2.out' }, '<')
-    gsap.to([headerImage, buttonImage], { opacity: 0.8 })
+    gsap.to([headerImage, buttonImage], { opacity: 0.6 })
 
     sliderIndex.value = 0
     headerIndex.value = 0
@@ -104,43 +104,43 @@ function sliderHandler() {
   <div class="container">
     <div class="gallery" @click="sliderHandler">
       <div class="main-area">
-        <img :src="headerList[headerIndex]" :class="`header-image${headerIndex + 1}`" draggable="false">
+        <img :src="headerList[headerIndex]" alt="header-image" class="header-image" draggable="false">
         <div class="shadow">
           <img
-            v-for="(item, index) in 3" :key="`shadow_${index}`" :src="shadowList[item - 1]" alt="" class="shadow-image"
+            v-for="(item, index) in 3" :key="`shadow_${index}`" :src="shadowList[item - 1]" alt="shadow-image" class="shadow-image"
             draggable="false"
           >
         </div>
         <div class="can">
           <div class="leafs-area">
             <img
-              v-for="(item, index) in 4" :key="`leaf_${index}`" :src="leafList[item - 1]" class="leaf-image"
+              v-for="(item, index) in 4" :key="`leaf_${index}`" :src="leafList[item - 1]" alt="leaf-image" class="leaf-image"
               draggable="false"
             >
           </div>
-          <div class="can-mask">
-            <img src="../assets/Labels.png" alt="" class="can-labels" draggable="false">
+          <div class="can-label">
+            <img src="../assets/Labels.png" alt="can-labels-image" class="can-labels-image" draggable="false">
           </div>
-          <img src="../assets/can.png" alt="" class="can-image" draggable="false">
+          <img src="../assets/can.png" alt="can-image" class="can-mask" draggable="false">
         </div>
         <div class="button">
-          <img :src="sliderList[sliderIndex].button" alt="" :class="`button-image${sliderIndex + 1}`" draggable="false">
+          <img :src="sliderList[sliderIndex].button" alt="button-image" class="button-image" draggable="false">
         </div>
       </div>
 
       <div v-for="(item, index) in sliderList" :key="`background_${index}`" class="background-slider">
-        <img :src="item.background">
+        <img :src="item.background" alt="background">
         <div class="label-slider">
-          <img :src="item.label" draggable="false">
+          <img :src="item.label" alt="fruit-label" draggable="false">
         </div>
       </div>
 
-      <div class="fruits-gallery">
+      <div class="fruits-slider">
         <figure
-          v-for="(item, index) in sliderList" :key="`fruit_${index}`" class="fruits-slider"
+          v-for="(item, index) in sliderList" :key="`fruit_${index}`" class="fruits-figure"
           :class="`fruit-${index + 1}`"
         >
-          <img :src="item.fruit" draggable="false">
+          <img :src="item.fruit" alt="fruit-image" draggable="false">
         </figure>
       </div>
     </div>
@@ -163,17 +163,14 @@ function sliderHandler() {
   position: relative;
 }
 
-.can-image {
-  width: 100%;
-  height: auto;
-  mix-blend-mode: multiply;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .can-mask {
   width: 100%;
+  mix-blend-mode: multiply;
+  position: absolute;
+  inset: 0;
+}
+
+.can-label {
   height: 100%;
   mask-image: url(../assets/can.png);
   mask-repeat: no-repeat;
@@ -181,9 +178,45 @@ function sliderHandler() {
   align-items: center;
 }
 
-.can-labels {
+.can-labels-image {
   width: 960px;
   height: auto;
+}
+
+.leafs-area {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  perspective: 1000px;
+}
+
+.leaf-image {
+  transform-style: preserve-3d;
+}
+
+.leaf-image:nth-child(1) {
+  position: absolute;
+  top: -120px;
+  left: -60px;
+}
+
+.leaf-image:nth-child(2) {
+  position: absolute;
+  bottom: 60px;
+  right: -80px;
+}
+
+.leaf-image:nth-child(3) {
+  position: absolute;
+  bottom: 250px;
+  right: 60px;
+}
+
+.leaf-image:nth-child(4) {
+  position: absolute;
+  top: 60px;
+  left: 40px;
 }
 
 .main-area {
@@ -224,70 +257,31 @@ function sliderHandler() {
 
 .background-slider {
   width: 100%;
-  margin: 0;
   flex-shrink: 0;
+  position: relative;
 }
 
 .label-slider {
   position: absolute;
-  top: 0;
-  width: 100%;
-  height: 1000px;
+  inset: 0;
+  margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.fruits-gallery {
+.fruits-slider {
   position: absolute;
   bottom: 0;
   left: 0;
 }
 
-.fruits-slider {
-  width: 100%;
+.fruits-figure {
   height: 1000px;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 
-}
-
-.leafs-area {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  perspective: 1000px;
-}
-
-.leaf-image {
-  transform-style: preserve-3d;
-}
-
-.leaf-image:nth-child(1) {
-  position: absolute;
-  top: -120px;
-  left: -60px;
-}
-
-.leaf-image:nth-child(2) {
-  position: absolute;
-  bottom: 60px;
-  right: -80px;
-}
-
-.leaf-image:nth-child(3) {
-  position: absolute;
-  bottom: 250px;
-  right: 60px;
-}
-
-.leaf-image:nth-child(4) {
-  position: absolute;
-  top: 60px;
-  left: 40px;
 }
 </style>
