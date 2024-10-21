@@ -3,71 +3,89 @@ import { gsap } from 'gsap'
 import { Flip } from 'gsap/all'
 import { ref } from 'vue'
 import Apples from '../assets/Carousel_Slider_Image/Apples/Apples.png'
-import Background2 from '../assets/Carousel_Slider_Image/Apples/Background_Slider.png'
-import Button2 from '../assets/Carousel_Slider_Image/Apples/button.png'
-import Label2 from '../assets/Carousel_Slider_Image/Apples/Labels.png'
-import ApplesLeaf1 from '../assets/Carousel_Slider_Image/Apples/Mask_group.png'
-import ApplesLeaf2 from '../assets/Carousel_Slider_Image/Apples/Mask_group_1.png'
-import Background3 from '../assets/Carousel_Slider_Image/PassionFruits/Background_Slider.png'
-import Button3 from '../assets/Carousel_Slider_Image/PassionFruits/button.png'
-import Label3 from '../assets/Carousel_Slider_Image/PassionFruits/Labels.png'
-import PassionFruitsLeaf1 from '../assets/Carousel_Slider_Image/PassionFruits/Mask_group.png'
-import PassionFruitsLeaf2 from '../assets/Carousel_Slider_Image/PassionFruits/Mask_group_1.png'
+import ApplesBackground from '../assets/Carousel_Slider_Image/Apples/Background_Slider.png'
+import ApplesButton from '../assets/Carousel_Slider_Image/Apples/button.png'
+import ApplesLabel from '../assets/Carousel_Slider_Image/Apples/Labels.png'
+import PassionFruitsBackground from '../assets/Carousel_Slider_Image/PassionFruits/Background_Slider.png'
+import PassionFruitsButton from '../assets/Carousel_Slider_Image/PassionFruits/button.png'
+import PassionFruitsLabel from '../assets/Carousel_Slider_Image/PassionFruits/Labels.png'
 import PassionFruits from '../assets/Carousel_Slider_Image/PassionFruits/Passion_fruits.png'
-import Background1 from '../assets/Carousel_Slider_Image/Pears/Background_Slider.png'
-import Button1 from '../assets/Carousel_Slider_Image/Pears/button.png'
-import Label1 from '../assets/Carousel_Slider_Image/Pears/Labels.png'
-import PearsLeaf1 from '../assets/Carousel_Slider_Image/Pears/Mask_group.png'
-import PearsLeaf2 from '../assets/Carousel_Slider_Image/Pears/Mask_group_1.png'
+import PearsBackground from '../assets/Carousel_Slider_Image/Pears/Background_Slider.png'
+import PearsButton from '../assets/Carousel_Slider_Image/Pears/button.png'
+import PearsLabel from '../assets/Carousel_Slider_Image/Pears/Labels.png'
 import Pears from '../assets/Carousel_Slider_Image/Pears/Pears.png'
-import HeaderGreen from '../assets/Header/Header-green.png'
-import HeaderWhite from '../assets/Header/Header-white.png'
+import HeaderGreen from '../assets/Header-1.png'
+import HeaderWhite from '../assets/Header-2.png'
+import leafGroup1Image1 from '../assets/leafGroup1Image1.png'
+import leafGroup1Image2 from '../assets/leafGroup1Image2.png'
+import leafGroup2Image1 from '../assets/leafGroup2Image1.png'
+import leafGroup2Image2 from '../assets/leafGroup2Image2.png'
+import shadow1 from '../assets/shadow-1.png'
+import shadow2 from '../assets/shadow-2.png'
+import shadow3 from '../assets/shadow-3.png'
 
 const headerList = [HeaderGreen, HeaderWhite]
 const headerIndex = ref(0)
-const leafList = [PearsLeaf1, PearsLeaf2, ApplesLeaf1, ApplesLeaf2]
+const leafList = [leafGroup1Image1, leafGroup1Image2, leafGroup2Image1, leafGroup2Image2]
+const shadowList = [shadow1, shadow2, shadow3]
 const sliderIndex = ref(0)
 const sliderList = [
-  { fruit: PassionFruits, background: Background1, label: Label1, button: Button1 },
-  { fruit: Apples, background: Background2, label: Label2, button: Button2 },
-  { fruit: Pears, background: Background3, label: Label3, button: Button3 },
+  { fruit: PassionFruits, background: PearsBackground, label: PearsLabel, button: PearsButton },
+  { fruit: Apples, background: ApplesBackground, label: ApplesLabel, button: ApplesButton },
+  { fruit: Pears, background: PassionFruitsBackground, label: PassionFruitsLabel, button: PassionFruitsButton },
 ]
 
 function sliderHandler() {
-  const state = Flip.getState('.default-area')
+  const state = Flip.getState('.main-area')
   const headerImage = document.querySelector(`.header-image${headerIndex.value + 1}`)
   const buttonImage = document.querySelector(`.button-image${sliderIndex.value + 1}`)
   const leafImage = gsap.utils.toArray('.leaf-image')
+  const leafGroup1Image1 = leafImage[0]
+  const leafGroup1Image2 = leafImage[1]
+  const leafGroup2Image1 = leafImage[2]
+  const leafGroup2Image2 = leafImage[3]
+  const shadowList = gsap.utils.toArray('.shadow-image')
+  const shadowImage1 = shadowList[0]
+  const shadowImage2 = shadowList[1]
+  const shadowImage3 = shadowList[2]
 
+  const tl = gsap.timeline({ default: { ease: 'power2.inOut' } })
   if (sliderIndex.value === 0) {
-    gsap.timeline({ default: { ease: 'power4.inOut' } }).to(leafImage[0], { translateX: 100, translateY: 180, rotationX: 30, rotationY: -30, duration: 0.4 }).to(leafImage[2], { translateX: 140, translateY: 170, rotationZ: 0, duration: 0.6, onComplete: () => {
-
-    } })
-    gsap.timeline({ default: { ease: 'power4.inOut' } }).to(leafImage[1], { translateX: -120, translateY: -200, rotationZ: -30, duration: 0.3 }).to(leafImage[3], { translateX: -140, translateY: -110, rotationZ: 0, duration: 0.6 })
-    gsap.to('.background-slider', { translateX: '-100%', ease: 'power1.in' })
-    gsap.to('.labels', { translateX: '-320px' })
-    gsap.timeline().to('.fruit-3', { translateY: '100%', ease: 'power1.in' }).to('.fruit-2', { translateY: '100%', ease: 'power1.in' }, '<').to('.fruit-1', { translateY: '100%', ease: 'power1.in' }, '<')
+    tl.to(leafGroup1Image1, { x: 60, y: 200, rotationZ: -50 })
+      .to(leafGroup1Image2, { x: -120, y: -200 }, '<')
+      .to(leafGroup2Image1, { x: 140, y: 170 })
+      .to(leafGroup2Image2, { x: -140, y: -110 }, '<')
+    tl.to(shadowImage2, { right: 0, bottom: 100 })
+      .to(shadowImage3, { right: 850, bottom: 250 }, '<')
+    gsap.to('.background-slider', { xPercent: -100, ease: 'power2.in' })
+    gsap.to('.can-labels', { x: -320 })
+    gsap.timeline().to('.fruit-3', { yPercent: 100, ease: 'power2.in' }).to('.fruit-2', { yPercent: 100, ease: 'power2.in' }, '<').to('.fruit-1', { yPercent: 100, ease: 'power2.in' }, '<')
     gsap.to([headerImage, buttonImage], { opacity: 0.8 })
     sliderIndex.value = 1
     headerIndex.value = 1
   }
   else if (sliderIndex.value === 1) {
-    gsap.timeline({ default: { ease: 'power2.inOut' } }).to(leafImage[2], { translateX: -200, rotateY: 180 }).to(leafImage[3], { translateX: 200, rotationY: 180 }, '<')
-    gsap.to('.background-slider', { translateX: '-200%', ease: 'power1.in' })
-    gsap.to('.labels', { translateX: '-640px' })
-    gsap.timeline().to('.fruit-3', { translateY: '-100%', ease: 'power1.out' }).to('.fruit-2', { translateY: '200%', ease: 'power1.in' }, '<').to('.fruit-1', { translateY: '200%', ease: 'power1.in' }, '<')
+    tl.to(leafGroup2Image1, { x: -200, rotationY: 180 })
+      .to(leafGroup2Image2, { x: 200, rotationY: 180 }, '<')
+    tl.to(shadowImage1, { right: 170, bottom: 210, yoyo: true, repeat: 1, duration: 0.2 })
+      .to(shadowImage2, { right: 1150, bottom: 50 }, '<')
+      .to(shadowImage3, { right: 400, bottom: 200, yoyo: true, repeat: 1, duration: 0.3 }, '<')
+
+    gsap.to('.background-slider', { xPercent: -200, ease: 'power2.in' })
+    gsap.to('.can-labels', { x: -640 })
+    gsap.timeline().to('.fruit-3', { yPercent: -100, ease: 'power2.out' }).to('.fruit-2', { yPercent: 200, ease: 'power2.in' }, '<').to('.fruit-1', { yPercent: 200, ease: 'power2.in' }, '<')
     gsap.to([headerImage, buttonImage], { opacity: 0.8 })
 
     sliderIndex.value = 2
     headerIndex.value = 1
   }
   else if (sliderIndex.value === 2) {
-    gsap.timeline({ default: { ease: 'power4.inOut' } }).to(leafImage[2], { translateX: 50, rotationZ: 60 }).to(leafImage[3], { translateY: 180 })
+    tl.to(leafGroup2Image1, { x: -80, y: 0, rotationX: 45 }, '<').to(leafGroup2Image2, { y: 180, rotationX: -45 }, '<').set(leafGroup1Image2, { x: 0, rotationX: -90 }).to(leafGroup1Image1, { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0 }).to([leafGroup1Image1, leafGroup1Image2, leafGroup2Image1, leafGroup2Image2], { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0 }, '<')
+    tl.to(shadowImage1, { right: 80, bottom: 220 }).to(shadowImage2, { right: 850, bottom: 250 }, '<').to(shadowImage3, { right: 350, bottom: 180 }, '<').set(shadowImage1, { right: 0, bottom: 220 }).set(shadowImage3, { right: 330, bottom: 220 }, '<').to(shadowImage1, { right: 100, bottom: 170 }).to(shadowImage3, { right: 180, bottom: 300 }, '<')
 
-    gsap.to('.background-slider', { translateX: '0%', duration: 1.1, ease: 'power1.Out' })
-
-    gsap.to('.labels', { translateX: '0px' })
-    gsap.timeline().to('.fruit-3', { translateY: '0%', duration: 1, ease: 'power1.in' }).to('.fruit-2', { translateY: '0%', ease: 'power1.out' }, '<').to('.fruit-1', { translateY: '0%', ease: 'power1.out' }, '<')
+    gsap.to('.background-slider', { xPercent: 0, ease: 'power2.Out' })
+    gsap.to('.can-labels', { x: 0 })
+    gsap.timeline().to('.fruit-3', { yPercent: 0, ease: 'power2.in' }).to('.fruit-2', { yPercent: 0, ease: 'power2.out' }, '<').to('.fruit-1', { yPercent: 0, ease: 'power2.out' }, '<')
     gsap.to([headerImage, buttonImage], { opacity: 0.8 })
 
     sliderIndex.value = 0
@@ -85,17 +103,25 @@ function sliderHandler() {
 <template>
   <div class="container">
     <div class="gallery" @click="sliderHandler">
-      <div class="default-area">
+      <div class="main-area">
         <img :src="headerList[headerIndex]" :class="`header-image${headerIndex + 1}`" draggable="false">
-
+        <div class="shadow">
+          <img
+            v-for="(item, index) in 3" :key="`shadow_${index}`" :src="shadowList[item - 1]" alt="" class="shadow-image"
+            draggable="false"
+          >
+        </div>
         <div class="can">
+          <div class="leafs-area">
+            <img
+              v-for="(item, index) in 4" :key="`leaf_${index}`" :src="leafList[item - 1]" class="leaf-image"
+              draggable="false"
+            >
+          </div>
           <div class="can-mask">
-            <img src="../assets/Labels.png" alt="" class="labels" draggable="false">
+            <img src="../assets/Labels.png" alt="" class="can-labels" draggable="false">
           </div>
           <img src="../assets/can.png" alt="" class="can-image" draggable="false">
-          <div class="leafs-area">
-            <img v-for="(item, index) in 4" :key="`leaf_${index}`" :src="leafList[item - 1]" class="leaf-image" draggable="false">
-          </div>
         </div>
         <div class="button">
           <img :src="sliderList[sliderIndex].button" alt="" :class="`button-image${sliderIndex + 1}`" draggable="false">
@@ -103,9 +129,9 @@ function sliderHandler() {
       </div>
 
       <div v-for="(item, index) in sliderList" :key="`background_${index}`" class="background-slider">
-        <img :src="item.background" class="background-image">
+        <img :src="item.background">
         <div class="label-slider">
-          <img :src="item.label" class="label-image" draggable="false">
+          <img :src="item.label" draggable="false">
         </div>
       </div>
 
@@ -114,7 +140,7 @@ function sliderHandler() {
           v-for="(item, index) in sliderList" :key="`fruit_${index}`" class="fruits-slider"
           :class="`fruit-${index + 1}`"
         >
-          <img :src="item.fruit" class="fruit-image" draggable="false">
+          <img :src="item.fruit" draggable="false">
         </figure>
       </div>
     </div>
@@ -125,7 +151,7 @@ function sliderHandler() {
 .gallery {
   width: 1440px;
   height: 1000px;
-  /* overflow: hidden; */
+  overflow: hidden;
   position: relative;
   display: flex;
 }
@@ -155,23 +181,45 @@ function sliderHandler() {
   align-items: center;
 }
 
-.labels {
+.can-labels {
   width: 960px;
   height: auto;
 }
 
-.default-area {
+.main-area {
   position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  height: 1000px;
-  padding: 0 25px;
+  inset: 0;
+  margin: auto;
   margin-top: -30px;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.shadow {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.shadow-image:nth-child(1) {
+  position: absolute;
+  right: 100px;
+  bottom: 170px;
+}
+
+.shadow-image:nth-child(2) {
+  position: absolute;
+  right: 850px;
+  bottom: 250px;
+}
+
+.shadow-image:nth-child(3) {
+  position: absolute;
+  right: 180px;
+  bottom: 300px;
 }
 
 .background-slider {
@@ -206,12 +254,6 @@ function sliderHandler() {
 
 }
 
-.background-image,
-.label-image,
-.fruit-image {
-  object-fit: cover;
-}
-
 .leafs-area {
   width: 100%;
   height: 100%;
@@ -241,13 +283,11 @@ function sliderHandler() {
   position: absolute;
   bottom: 250px;
   right: 60px;
-  transform: rotateZ(-90deg);
 }
 
 .leaf-image:nth-child(4) {
   position: absolute;
   top: 60px;
   left: 40px;
-  transform: rotateZ(90deg);
 }
 </style>
