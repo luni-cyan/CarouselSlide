@@ -2,20 +2,20 @@
 import { gsap } from 'gsap'
 import { Flip } from 'gsap/all'
 import { ref } from 'vue'
-import Apples from '../assets/Carousel_Slider_Image/Apples/Apples.png'
-import ApplesBackground from '../assets/Carousel_Slider_Image/Apples/Background_Slider.png'
-import ApplesButton from '../assets/Carousel_Slider_Image/Apples/button.png'
-import ApplesLabel from '../assets/Carousel_Slider_Image/Apples/Labels.png'
-import PassionFruitsBackground from '../assets/Carousel_Slider_Image/PassionFruits/Background_Slider.png'
-import PassionFruitsButton from '../assets/Carousel_Slider_Image/PassionFruits/button.png'
-import PassionFruitsLabel from '../assets/Carousel_Slider_Image/PassionFruits/Labels.png'
-import PassionFruits from '../assets/Carousel_Slider_Image/PassionFruits/Passion_fruits.png'
-import PearsBackground from '../assets/Carousel_Slider_Image/Pears/Background_Slider.png'
-import PearsButton from '../assets/Carousel_Slider_Image/Pears/button.png'
-import PearsLabel from '../assets/Carousel_Slider_Image/Pears/Labels.png'
-import Pears from '../assets/Carousel_Slider_Image/Pears/Pears.png'
-import HeaderGreen from '../assets/Header-1.png'
-import HeaderWhite from '../assets/Header-2.png'
+import apples from '../assets/Carousel_Slider_Image/Apples/Apples.png'
+import applesBackground from '../assets/Carousel_Slider_Image/Apples/Background_Slider.png'
+import applesButton from '../assets/Carousel_Slider_Image/Apples/button.png'
+import applesLabel from '../assets/Carousel_Slider_Image/Apples/Labels.png'
+import passionFruitsBackground from '../assets/Carousel_Slider_Image/PassionFruits/Background_Slider.png'
+import passionFruitsButton from '../assets/Carousel_Slider_Image/PassionFruits/button.png'
+import passionFruitsLabel from '../assets/Carousel_Slider_Image/PassionFruits/Labels.png'
+import passionFruits from '../assets/Carousel_Slider_Image/PassionFruits/Passion_fruits.png'
+import pearsBackground from '../assets/Carousel_Slider_Image/Pears/Background_Slider.png'
+import pearsButton from '../assets/Carousel_Slider_Image/Pears/button.png'
+import pearsLabel from '../assets/Carousel_Slider_Image/Pears/Labels.png'
+import pears from '../assets/Carousel_Slider_Image/Pears/Pears.png'
+import header1 from '../assets/Header-1.png'
+import header2 from '../assets/Header-2.png'
 import leafGroup1Image1 from '../assets/leafGroup1Image1.png'
 import leafGroup1Image2 from '../assets/leafGroup1Image2.png'
 import leafGroup2Image1 from '../assets/leafGroup2Image1.png'
@@ -24,15 +24,15 @@ import shadow1 from '../assets/shadow-1.png'
 import shadow2 from '../assets/shadow-2.png'
 import shadow3 from '../assets/shadow-3.png'
 
-const headerList = [HeaderGreen, HeaderWhite]
+const headerList = [header1, header2]
 const headerIndex = ref(0)
-const leafList = [leafGroup1Image1, leafGroup1Image2, leafGroup2Image1, leafGroup2Image2]
 const shadowList = [shadow1, shadow2, shadow3]
+const leafList = [leafGroup1Image1, leafGroup1Image2, leafGroup2Image1, leafGroup2Image2]
 const sliderIndex = ref(0)
 const sliderList = [
-  { fruit: PassionFruits, background: PearsBackground, label: PearsLabel, button: PearsButton },
-  { fruit: Apples, background: ApplesBackground, label: ApplesLabel, button: ApplesButton },
-  { fruit: Pears, background: PassionFruitsBackground, label: PassionFruitsLabel, button: PassionFruitsButton },
+  { fruit: passionFruits, background: pearsBackground, label: pearsLabel, button: pearsButton },
+  { fruit: apples, background: applesBackground, label: applesLabel, button: applesButton },
+  { fruit: pears, background: passionFruitsBackground, label: passionFruitsLabel, button: passionFruitsButton },
 ]
 
 function sliderHandler() {
@@ -44,10 +44,10 @@ function sliderHandler() {
   const leafGroup1Image2 = leafImage[1]
   const leafGroup2Image1 = leafImage[2]
   const leafGroup2Image2 = leafImage[3]
-  const shadowList = gsap.utils.toArray('.shadow-image')
-  const shadowImage1 = shadowList[0]
-  const shadowImage2 = shadowList[1]
-  const shadowImage3 = shadowList[2]
+  const shadowArray = gsap.utils.toArray('.shadow-image')
+  const shadowImage1 = shadowArray[0]
+  const shadowImage2 = shadowArray[1]
+  const shadowImage3 = shadowArray[2]
 
   const tl = gsap.timeline({ default: { ease: 'power2.inOut' } })
   if (sliderIndex.value === 0) {
@@ -61,6 +61,7 @@ function sliderHandler() {
     gsap.to('.can-labels-image', { x: -320 })
     gsap.timeline().to('.fruit-3', { yPercent: 100, ease: 'power2.in' }).to('.fruit-2', { yPercent: 100, ease: 'power2.in' }, '<').to('.fruit-1', { yPercent: 100, ease: 'power2.in' }, '<')
     gsap.to([headerImage, buttonImage], { opacity: 0.6 })
+
     sliderIndex.value = 1
     headerIndex.value = 1
   }
@@ -104,17 +105,19 @@ function sliderHandler() {
   <div class="container">
     <div class="gallery" @click="sliderHandler">
       <div class="main-area">
-        <img :src="headerList[headerIndex]" alt="header-image" class="header-image" draggable="false">
+        <div class="header">
+          <img :src="headerList[headerIndex]" alt="header-image" class="header-image" draggable="false">
+        </div>
         <div class="shadow">
           <img
-            v-for="(item, index) in 3" :key="`shadow_${index}`" :src="shadowList[item - 1]" alt="shadow-image" class="shadow-image"
+            v-for="item in 3" :key="`shadow_${item}`" :src="shadowList[item - 1]" alt="shadow-image" class="shadow-image"
             draggable="false"
           >
         </div>
         <div class="can">
           <div class="leafs-area">
             <img
-              v-for="(item, index) in 4" :key="`leaf_${index}`" :src="leafList[item - 1]" alt="leaf-image" class="leaf-image"
+              v-for="item in 4" :key="`leaf_${item}`" :src="leafList[item - 1]" :alt="`leaf-image${item}`" class="leaf-image"
               draggable="false"
             >
           </div>
@@ -124,14 +127,14 @@ function sliderHandler() {
           <img src="../assets/can.png" alt="can-image" class="can-mask" draggable="false">
         </div>
         <div class="button">
-          <img :src="sliderList[sliderIndex].button" alt="button-image" class="button-image" draggable="false">
+          <img :src="sliderList[sliderIndex].button" :alt="`button-image${sliderIndex + 1}`" class="button-image" draggable="false">
         </div>
       </div>
 
       <div v-for="(item, index) in sliderList" :key="`background_${index}`" class="background-slider">
-        <img :src="item.background" alt="background">
+        <img :src="item.background" :alt="`background${index}`">
         <div class="label-slider">
-          <img :src="item.label" alt="fruit-label" draggable="false">
+          <img :src="item.label" :alt="`fruit-label${index}`" draggable="false">
         </div>
       </div>
 
@@ -151,7 +154,7 @@ function sliderHandler() {
 .gallery {
   width: 1440px;
   height: 1000px;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
   display: flex;
 }
