@@ -14,8 +14,8 @@ import pearsBackground from '../assets/Carousel_Slider_Image/Pears/Background_Sl
 import pearsButton from '../assets/Carousel_Slider_Image/Pears/button.png'
 import pearsLabel from '../assets/Carousel_Slider_Image/Pears/Labels.png'
 import pears from '../assets/Carousel_Slider_Image/Pears/Pears.png'
-import header1 from '../assets/Header-1.png'
-import header2 from '../assets/Header-2.png'
+import fruityGreen from '../assets/Header/Fruity-green.png'
+import fruityWhite from '../assets/Header/Fruity-white.png'
 import leafGroup1Image1 from '../assets/leafGroup1Image1.png'
 import leafGroup1Image2 from '../assets/leafGroup1Image2.png'
 import leafGroup2Image1 from '../assets/leafGroup2Image1.png'
@@ -24,7 +24,7 @@ import shadow1 from '../assets/shadow-1.png'
 import shadow2 from '../assets/shadow-2.png'
 import shadow3 from '../assets/shadow-3.png'
 
-const headerList = [header1, header2]
+const headerList = [fruityGreen, fruityWhite]
 const headerIndex = ref(0)
 const shadowList = [shadow1, shadow2, shadow3]
 const leafList = [leafGroup1Image1, leafGroup1Image2, leafGroup2Image1, leafGroup2Image2]
@@ -38,7 +38,7 @@ const sliderList = [
 function sliderHandler() {
   const state = Flip.getState('.main-area')
   const headerImage = document.querySelector('.header-image')
-  const buttonImage = document.querySelector(`.button-image${sliderIndex.value + 1}`)
+  const buttonImage = document.querySelector('.button-image')
   const leafImage = gsap.utils.toArray('.leaf-image')
   const leafGroup1Image1 = leafImage[0]
   const leafGroup1Image2 = leafImage[1]
@@ -107,6 +107,8 @@ function sliderHandler() {
       <div class="main-area">
         <div class="header">
           <img :src="headerList[headerIndex]" alt="header-image" class="header-image" draggable="false">
+          <img src="../assets/Header/Frame-1.png" alt="">
+          <img src="../assets/Header/Frame-2.png" alt="">
         </div>
         <div class="shadow">
           <img
@@ -157,6 +159,13 @@ function sliderHandler() {
   /* overflow: hidden; */
   position: relative;
   display: flex;
+}
+.header{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  box-sizing: border-box;
 }
 
 .can {
