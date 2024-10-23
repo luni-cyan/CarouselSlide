@@ -76,68 +76,72 @@ function sliderHandler() {
     return
   isAnimating.value = true
 
-  if (sliderIndex.value === 0) {
-    gsap.to(backgroundSlider.value, { xPercent: -100, ease: 'power2.in', duration: 0.8 })
-    gsap.to(canLabels.value, { x: -320, duration: 0.8 })
+  switch (sliderIndex.value) {
+    case 0:
+      gsap.to(backgroundSlider.value, { xPercent: -100, ease: 'power2.in', duration: 0.8 })
+      gsap.to(canLabels.value, { x: -320, duration: 0.8 })
 
-    tl_fruit.to(fruitArray.value[0], { yPercent: 100 })
-      .to(fruitArray.value[1], { yPercent: 100 }, '<')
-      .to(fruitArray.value[2], { yPercent: 100 }, '<')
-    tl_shadow.to(shadowArray.value[1], { right: 0, bottom: 100 }, '<')
-      .to(shadowArray.value[2], { right: 850, bottom: 250 }, '<')
-    tl_leaf.to(leafArray.value[0], { x: 60, y: 200, rotationZ: -50, duration: 0.3 })
-      .to(leafArray.value[1], { x: -120, y: -200, duration: 0.3 }, '<')
-      .to(leafArray.value[2], { x: 140, y: 170, duration: 0.5 })
-      .to(leafArray.value[3], { x: -140, y: -110, duration: 0.5 }, '<')
-      .eventCallback('onComplete', () => {
-        isAnimating.value = false
-        headerIndex.value = 1
-        sliderIndex.value = 1
-      })
-  }
-  else if (sliderIndex.value === 1) {
-    gsap.to(backgroundSlider.value, { xPercent: -200, ease: 'power2.in', duration: 0.8 })
-    gsap.to(canLabels.value, { x: -640, duration: 0.8 })
+      tl_fruit.to(fruitArray.value[0], { yPercent: 100 })
+        .to(fruitArray.value[1], { yPercent: 100 }, '<')
+        .to(fruitArray.value[2], { yPercent: 100 }, '<')
+      tl_shadow.to(shadowArray.value[1], { right: 0, bottom: 100 }, '<')
+        .to(shadowArray.value[2], { right: 850, bottom: 250 }, '<')
+      tl_leaf.to(leafArray.value[0], { x: 60, y: 200, rotationZ: -50, duration: 0.3 })
+        .to(leafArray.value[1], { x: -120, y: -200, duration: 0.3 }, '<')
+        .to(leafArray.value[2], { x: 140, y: 170, duration: 0.5 })
+        .to(leafArray.value[3], { x: -140, y: -110, duration: 0.5 }, '<')
+        .eventCallback('onComplete', () => {
+          isAnimating.value = false
+          headerIndex.value = 1
+          sliderIndex.value = 1
+        })
+      break
+    case 1:
+      gsap.to(backgroundSlider.value, { xPercent: -200, ease: 'power2.in', duration: 0.8 })
+      gsap.to(canLabels.value, { x: -640, duration: 0.8 })
 
-    tl_fruit.to(fruitArray.value[0], { yPercent: -100 })
-      .to(fruitArray.value[1], { yPercent: 200 }, '<')
-      .to(fruitArray.value[2], { yPercent: 200 }, '<')
-    tl_shadow.to(shadowArray.value[0], { right: 300, bottom: 210, yoyo: true, repeat: 1, duration: 0.4 })
-      .to(shadowArray.value[1], { right: 1150, bottom: 50 }, '<')
-      .to(shadowArray.value[2], { right: 500, bottom: 200, yoyo: true, repeat: 1, duration: 0.4 }, '<')
-    tl_leaf.to(leafArray.value[2], { x: -200, rotationY: 180 })
-      .to(leafArray.value[3], { x: 200, rotationY: 180 }, '<')
-      .eventCallback('onComplete', () => {
-        isAnimating.value = false
-        sliderIndex.value = 2
-        headerIndex.value = 1
-      })
-  }
-  else if (sliderIndex.value === 2) {
-    gsap.to(backgroundSlider.value, { xPercent: 0, ease: 'power2.Out', duration: 0.8 })
-    gsap.to(canLabels.value, { x: 0, duration: 0.8 })
+      tl_fruit.to(fruitArray.value[0], { yPercent: -100 })
+        .to(fruitArray.value[1], { yPercent: 200 }, '<')
+        .to(fruitArray.value[2], { yPercent: 200 }, '<')
+      tl_shadow.to(shadowArray.value[0], { right: 300, bottom: 210, yoyo: true, repeat: 1, duration: 0.4 })
+        .to(shadowArray.value[1], { right: 1150, bottom: 50 }, '<')
+        .to(shadowArray.value[2], { right: 500, bottom: 200, yoyo: true, repeat: 1, duration: 0.4 }, '<')
+      tl_leaf.to(leafArray.value[2], { x: -200, rotationY: 180 })
+        .to(leafArray.value[3], { x: 200, rotationY: 180 }, '<')
+        .eventCallback('onComplete', () => {
+          isAnimating.value = false
+          sliderIndex.value = 2
+          headerIndex.value = 1
+        })
+      break
+    case 2:
+      gsap.to(backgroundSlider.value, { xPercent: 0, ease: 'power2.Out', duration: 0.8 })
+      gsap.to(canLabels.value, { x: 0, duration: 0.8 })
 
-    tl_fruit.to(fruitArray.value[2], { yPercent: 100 })
-      .to(fruitArray.value[1], { yPercent: 0 }, '<')
-      .to(fruitArray.value[0], { yPercent: 0 }, '<')
-      .to(fruitArray.value[2], { yPercent: 0 })
-    tl_shadow.to(shadowArray.value[0], { right: 80, bottom: 240, duration: 0.4 })
-      .to(shadowArray.value[2], { right: 350, bottom: 180, duration: 0.4 }, '<')
-      .to(shadowArray.value[1], { right: 850, bottom: 250, duration: 0.6 }, '<')
-      .set(shadowArray.value[0], { right: 0, bottom: 240 })
-      .set(shadowArray.value[2], { right: 280, bottom: 280 })
-      .to(shadowArray.value[0], { right: 100, bottom: 170, duration: 0.2 }, '<')
-      .to(shadowArray.value[2], { right: 180, bottom: 300, duration: 0.2 }, '<')
+      tl_fruit.to(fruitArray.value[2], { yPercent: 100 })
+        .to(fruitArray.value[1], { yPercent: 0 }, '<')
+        .to(fruitArray.value[0], { yPercent: 0 }, '<')
+        .to(fruitArray.value[2], { yPercent: 0 })
+      tl_shadow.to(shadowArray.value[0], { right: 80, bottom: 240, duration: 0.4 })
+        .to(shadowArray.value[2], { right: 350, bottom: 180, duration: 0.4 }, '<')
+        .to(shadowArray.value[1], { right: 850, bottom: 250, duration: 0.6 }, '<')
+        .set(shadowArray.value[0], { right: 0, bottom: 240 })
+        .set(shadowArray.value[2], { right: 280, bottom: 280 })
+        .to(shadowArray.value[0], { right: 100, bottom: 170, duration: 0.2 }, '<')
+        .to(shadowArray.value[2], { right: 180, bottom: 300, duration: 0.2 }, '<')
 
-    tl_leaf.to(leafArray.value[2], { x: -80, y: 0, rotationX: 45, duration: 0.5 })
-      .to(leafArray.value[3], { y: 200, rotationX: -70, duration: 0.5 }, '<')
-      .set(leafArray.value[1], { x: 0, y: -180, rotationX: -90 })
-      .to([leafArray.value[0], leafArray.value[1], leafArray.value[2], leafArray.value[3]], { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.3 }, '<')
-      .eventCallback('onComplete', () => {
-        isAnimating.value = false
-        sliderIndex.value = 0
-        headerIndex.value = 0
-      })
+      tl_leaf.to(leafArray.value[2], { x: -80, y: 0, rotationX: 45, duration: 0.5 })
+        .to(leafArray.value[3], { y: 200, rotationX: -70, duration: 0.5 }, '<')
+        .set(leafArray.value[1], { x: 0, y: -180, rotationX: -90 })
+        .to([leafArray.value[0], leafArray.value[1], leafArray.value[2], leafArray.value[3]], { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.3 }, '<')
+        .eventCallback('onComplete', () => {
+          isAnimating.value = false
+          sliderIndex.value = 0
+          headerIndex.value = 0
+        })
+      break
+    default:
+      console.warn('Invalid slider index:', sliderIndex.value)
   }
   Flip.from(state, {
     ease: 'circ.inOut',
