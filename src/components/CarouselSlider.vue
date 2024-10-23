@@ -38,19 +38,20 @@ const sliderList = [
 
 const refs = {
   mainArea: ref(null),
-  headerImage: ref(null),
-  leafArray: ref(null),
-  shadowArray: ref(null),
-  backgroundSlider: ref(null),
+  headerLogo: ref(null),
+  leafGroup: ref(null),
+  shadowGroup: ref(null),
+  backgroundCarousel: ref(null),
   canLabels: ref(null),
-  fruitArray: ref(null),
+  fruitSlider: ref(null),
 }
-const { mainArea, headerImage, leafArray, shadowArray, backgroundSlider, canLabels, fruitArray } = refs
+const { mainArea, headerLogo, leafGroup, shadowGroup, backgroundCarousel, canLabels, fruitSlider } = refs
 
 const isAnimating = ref(false)
 
 function sliderHandler() {
   const state = Flip.getState(mainArea.value)
+
   const tl_leaf = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 0.8 } })
   const tl_shadow = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 0.8 } })
   const tl_fruit = gsap.timeline(
@@ -60,12 +61,12 @@ function sliderHandler() {
         duration: 0.8,
       },
       onStart: () => {
-        fruitArray.value.forEach((el) => {
+        fruitSlider.value.forEach((el) => {
           el.style.zIndex = 3
         })
       },
       onComplete: () => {
-        fruitArray.value.forEach((el) => {
+        fruitSlider.value.forEach((el) => {
           el.style.zIndex = 'auto'
         })
       },
@@ -78,79 +79,86 @@ function sliderHandler() {
 
   switch (sliderIndex.value) {
     case 0:
-      gsap.to(backgroundSlider.value, { xPercent: -100, ease: 'power2.in', duration: 0.8 })
+      gsap.to(backgroundCarousel.value, { xPercent: -100, ease: 'power2.in', duration: 0.8 })
       gsap.to(canLabels.value, { x: -320, duration: 0.8 })
 
-      tl_fruit.to(fruitArray.value[0], { yPercent: 100 })
-        .to(fruitArray.value[1], { yPercent: 100 }, '<')
-        .to(fruitArray.value[2], { yPercent: 100 }, '<')
-      tl_shadow.to(shadowArray.value[1], { right: 0, bottom: 100 }, '<')
-        .to(shadowArray.value[2], { right: 850, bottom: 250 }, '<')
-      tl_leaf.to(leafArray.value[0], { x: 60, y: 200, rotationZ: -50, duration: 0.3 })
-        .to(leafArray.value[1], { x: -120, y: -200, duration: 0.3 }, '<')
-        .to(leafArray.value[2], { x: 140, y: 170, duration: 0.5 })
-        .to(leafArray.value[3], { x: -140, y: -110, duration: 0.5 }, '<')
+      tl_fruit.to(fruitSlider.value[0], { yPercent: 100 })
+        .to(fruitSlider.value[1], { yPercent: 100 }, '<')
+        .to(fruitSlider.value[2], { yPercent: 100 }, '<')
+
+      tl_shadow.to(shadowGroup.value[1], { right: 0, bottom: 100 }, '<')
+        .to(shadowGroup.value[2], { right: 850, bottom: 250 }, '<')
+
+      tl_leaf.to(leafGroup.value[0], { x: 60, y: 200, rotationZ: -50, duration: 0.3 })
+        .to(leafGroup.value[1], { x: -120, y: -200, duration: 0.3 }, '<')
+        .to(leafGroup.value[2], { x: 140, y: 170, duration: 0.5 })
+        .to(leafGroup.value[3], { x: -140, y: -110, duration: 0.5 }, '<')
         .eventCallback('onComplete', () => {
           isAnimating.value = false
           headerIndex.value = 1
           sliderIndex.value = 1
         })
       break
+
     case 1:
-      gsap.to(backgroundSlider.value, { xPercent: -200, ease: 'power2.in', duration: 0.8 })
+      gsap.to(backgroundCarousel.value, { xPercent: -200, ease: 'power2.in', duration: 0.8 })
       gsap.to(canLabels.value, { x: -640, duration: 0.8 })
 
-      tl_fruit.to(fruitArray.value[0], { yPercent: -100 })
-        .to(fruitArray.value[1], { yPercent: 200 }, '<')
-        .to(fruitArray.value[2], { yPercent: 200 }, '<')
-      tl_shadow.to(shadowArray.value[0], { right: 300, bottom: 210, yoyo: true, repeat: 1, duration: 0.4 })
-        .to(shadowArray.value[1], { right: 1150, bottom: 50 }, '<')
-        .to(shadowArray.value[2], { right: 500, bottom: 200, yoyo: true, repeat: 1, duration: 0.4 }, '<')
-      tl_leaf.to(leafArray.value[2], { x: -200, rotationY: 180 })
-        .to(leafArray.value[3], { x: 200, rotationY: 180 }, '<')
+      tl_fruit.to(fruitSlider.value[0], { yPercent: -100 })
+        .to(fruitSlider.value[1], { yPercent: 200 }, '<')
+        .to(fruitSlider.value[2], { yPercent: 200 }, '<')
+
+      tl_shadow.to(shadowGroup.value[0], { right: 300, bottom: 210, yoyo: true, repeat: 1, duration: 0.4 })
+        .to(shadowGroup.value[1], { right: 1150, bottom: 50 }, '<')
+        .to(shadowGroup.value[2], { right: 500, bottom: 200, yoyo: true, repeat: 1, duration: 0.4 }, '<')
+
+      tl_leaf.to(leafGroup.value[2], { x: -200, rotationY: 180 })
+        .to(leafGroup.value[3], { x: 200, rotationY: 180 }, '<')
         .eventCallback('onComplete', () => {
           isAnimating.value = false
           sliderIndex.value = 2
           headerIndex.value = 1
         })
       break
+
     case 2:
-      gsap.to(backgroundSlider.value, { xPercent: 0, ease: 'power2.Out', duration: 0.8 })
+      gsap.to(backgroundCarousel.value, { xPercent: 0, ease: 'power2.Out', duration: 0.8 })
       gsap.to(canLabels.value, { x: 0, duration: 0.8 })
 
-      tl_fruit.to(fruitArray.value[2], { yPercent: 100 })
-        .to(fruitArray.value[1], { yPercent: 0 }, '<')
-        .to(fruitArray.value[0], { yPercent: 0 }, '<')
-        .to(fruitArray.value[2], { yPercent: 0 })
-      tl_shadow.to(shadowArray.value[0], { right: 80, bottom: 240, duration: 0.4 })
-        .to(shadowArray.value[2], { right: 350, bottom: 180, duration: 0.4 }, '<')
-        .to(shadowArray.value[1], { right: 850, bottom: 250, duration: 0.6 }, '<')
-        .set(shadowArray.value[0], { right: 0, bottom: 240 })
-        .set(shadowArray.value[2], { right: 280, bottom: 280 })
-        .to(shadowArray.value[0], { right: 100, bottom: 170, duration: 0.2 }, '<')
-        .to(shadowArray.value[2], { right: 180, bottom: 300, duration: 0.2 }, '<')
+      tl_fruit.to(fruitSlider.value[2], { yPercent: 100 })
+        .to(fruitSlider.value[1], { yPercent: 0 }, '<')
+        .to(fruitSlider.value[0], { yPercent: 0 }, '<')
+        .to(fruitSlider.value[2], { yPercent: 0 })
 
-      tl_leaf.to(leafArray.value[2], { x: -80, y: 0, rotationX: 45, duration: 0.5 })
-        .to(leafArray.value[3], { y: 200, rotationX: -70, duration: 0.5 }, '<')
-        .set(leafArray.value[1], { x: 0, y: -180, rotationX: -90 })
-        .to([leafArray.value[0], leafArray.value[1], leafArray.value[2], leafArray.value[3]], { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.3 }, '<')
+      tl_shadow.to(shadowGroup.value[0], { right: 80, bottom: 240, duration: 0.4 })
+        .to(shadowGroup.value[2], { right: 400, bottom: 180, duration: 0.4 }, '<')
+        .to(shadowGroup.value[1], { right: 850, bottom: 250, duration: 0.6 }, '<')
+        .set(shadowGroup.value[2], { right: 280, bottom: 280 })
+        .to(shadowGroup.value[0], { right: 100, bottom: 170, duration: 0.2 }, '<')
+        .to(shadowGroup.value[2], { right: 180, bottom: 300, duration: 0.2 }, '<')
+
+      tl_leaf.to(leafGroup.value[2], { x: -80, y: 0, rotationX: 45, duration: 0.5 })
+        .to(leafGroup.value[3], { y: 200, rotationX: -70, duration: 0.5 }, '<')
+        .set(leafGroup.value[1], { x: 0, y: -180, rotationX: -90 })
+        .to([leafGroup.value[0], leafGroup.value[1], leafGroup.value[2], leafGroup.value[3]], { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.3 }, '<')
         .eventCallback('onComplete', () => {
           isAnimating.value = false
           sliderIndex.value = 0
           headerIndex.value = 0
         })
       break
+
     default:
       console.warn('Invalid slider index:', sliderIndex.value)
   }
   Flip.from(state, {
     ease: 'circ.inOut',
-    duration: 0.8,
+    duration: 0.4,
     onStart: () => {
-      gsap.to(headerImage.value, { opacity: 0.6, duration: 0.4 })
+      gsap.to(headerLogo.value, { opacity: 0.6, duration: 0.4 })
     },
     onComplete: () => {
-      gsap.to(headerImage.value, { opacity: 1, duration: 0.4 })
+      gsap.to(headerLogo.value, { opacity: 1, duration: 0.4 })
     },
   })
 }
@@ -161,31 +169,19 @@ function sliderHandler() {
     <div class="gallery" @click="sliderHandler">
       <div ref="mainArea" class="main-area">
         <div class="header">
-          <img
-            ref="headerImage" :src="headerList[headerIndex]" alt="header-image" class="header-image"
-            draggable="false"
-          >
-          <img src="../assets/Header/Frame-1.png" class="header-frame-1" draggable="false">
-          <img src="../assets/Header/Frame-2.png" class="header-frame-2" draggable="false">
+          <img ref="headerLogo" :src="headerList[headerIndex]" :alt="`header-logo${headerIndex + 1}`" class="header-logo" draggable="false">
+          <img src="../assets/Header/Frame-1.png" alt="header-frame1" class="header-frame1" draggable="false">
+          <img src="../assets/Header/Frame-2.png" alt="header-frame2" class="header-frame2" draggable="false">
         </div>
         <div class="shadow">
-          <img
-            v-for="(item, index) in shadowList" :key="`shadow_${index}`" ref="shadowArray" :src="item"
-            :alt="`shadow-image${index + 1}`" class="shadow-image" draggable="false"
-          >
+          <img v-for="(item, index) in shadowList" :key="`shadow_${index}`" ref="shadowGroup" :src="item" :alt="`shadow-image${index + 1}`" class="shadow-image" draggable="false">
         </div>
         <div class="can">
           <div class="leafs-area">
-            <img
-              v-for="(item, index) in leafList" :key="`leaf_${index}`" ref="leafArray" :src="item"
-              :alt="`leaf-image${index + 1}`" class="leaf-image" draggable="false"
-            >
+            <img v-for="(item, index) in leafList" :key="`leaf_${index}`" ref="leafGroup" :src="item" :alt="`leaf-image${index + 1}`" class="leaf-image" draggable="false">
           </div>
           <div class="can-label">
-            <img
-              ref="canLabels" src="../assets/Labels.png" alt="can-labels-image" class="can-labels-image"
-              draggable="false"
-            >
+            <img ref="canLabels" src="../assets/Labels.png" alt="can-labels-image" class="can-labels-image" draggable="false">
           </div>
           <img src="../assets/can.png" alt="can-image" class="can-mask" draggable="false">
         </div>
@@ -194,19 +190,16 @@ function sliderHandler() {
         </div>
       </div>
 
-      <div
-        v-for="(item, index) in sliderList" :key="`background_${index}`" ref="backgroundSlider"
-        class="background-slider"
-      >
-        <img :src="item.background" :alt="`background${index}`">
+      <div v-for="(item, index) in sliderList" :key="`background_${index}`" ref="backgroundCarousel" class="background-carousel">
+        <img :src="item.background" :alt="`background${index + 1}`">
         <div class="label-slider">
-          <img :src="item.label" :alt="`fruit-label${index}`" draggable="false">
+          <img :src="item.label" :alt="`fruit-label${index + 1}`" draggable="false">
         </div>
       </div>
 
       <div class="fruits-slider">
-        <figure v-for="(item, index) in sliderList" :key="`fruit_${index}`" ref="fruitArray" class="fruits-figure">
-          <img :src="item.fruit" alt="fruit-image" draggable="false">
+        <figure v-for="(item, index) in sliderList" :key="`fruit_${index}`" ref="fruitSlider" class="fruits-figure">
+          <img :src="item.fruit" :alt="`fruit-image${index + 1}`" draggable="false">
         </figure>
       </div>
     </div>
@@ -233,15 +226,15 @@ function sliderHandler() {
   box-sizing: border-box;
 }
 
-.header-image {
+.header-logo {
   flex: 0 1 100px;
 }
 
-.header-frame-1 {
+.header-frame1 {
   flex: 0 1 750px;
 }
 
-.header-frame-2 {
+.header-frame2 {
   flex: 0 1 250px;
 }
 
@@ -277,11 +270,6 @@ function sliderHandler() {
   height: 100%;
   position: absolute;
   inset: 0;
-  perspective: 1000px;
-}
-
-.leaf-image {
-  transform-style: preserve-3d;
 }
 
 .leaf-image:nth-child(1) {
@@ -344,7 +332,7 @@ function sliderHandler() {
   bottom: 300px;
 }
 
-.background-slider {
+.background-carousel {
   width: 100%;
   flex-shrink: 0;
   position: relative;
