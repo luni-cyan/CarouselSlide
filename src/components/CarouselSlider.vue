@@ -71,8 +71,8 @@ function sliderHandler() {
         .to(shadowGroup.value[2], { right: 850, bottom: 250 }, '<')
 
       tl_leaf.to(leafGroup.value[0], { x: 60, y: 200, rotationZ: -50, duration: 0.3 })
-        .to(leafGroup.value[1], { x: -120, y: -200, duration: 0.3 }, '<')
-        .to(leafGroup.value[2], { x: 140, y: 170, duration: 0.5 })
+        .to(leafGroup.value[1], { x: -120, y: -200, rotationX: -30, duration: 0.3 }, '<')
+        .to(leafGroup.value[2], { x: 140, y: 180, duration: 0.5 })
         .to(leafGroup.value[3], { x: -130, y: -120, duration: 0.5 }, '<')
         .eventCallback('onComplete', () => {
           isAnimating.value = false
@@ -92,7 +92,7 @@ function sliderHandler() {
         .to(shadowGroup.value[1], { right: 1150, bottom: 50 }, '<')
         .to(shadowGroup.value[2], { right: 500, bottom: 200, opacity: 0, yoyo: true, repeat: 1, duration: 0.4 }, '<')
 
-      tl_leaf.to(leafGroup.value[2], { x: -200, rotationY: 180 })
+      tl_leaf.to(leafGroup.value[2], { x: -190, rotationY: 180 })
         .to(leafGroup.value[3], { x: 200, rotationY: 180 }, '<')
         .eventCallback('onComplete', () => {
           isAnimating.value = false
@@ -111,12 +111,13 @@ function sliderHandler() {
       tl_shadow.to(shadowGroup.value[0], { right: 80, bottom: 260, opacity: 0, yoyo: true, repeat: 1, duration: 0.4 })
         .to(shadowGroup.value[1], { right: 850, bottom: 250, duration: 0.8 }, '<')
         .to(shadowGroup.value[2], { right: 400, bottom: 180, opacity: 0, duration: 0.4 }, '<')
-        .to(shadowGroup.value[2], { right: 180, bottom: 300, opacity: 1, duration: 0.4 }, '>')
+        .to(shadowGroup.value[2], { right: 200, bottom: 290, opacity: 1, duration: 0.4 }, '>')
 
       tl_leaf.to(leafGroup.value[2], { x: -80, y: 0, rotationX: 45, duration: 0.5 })
-        .to(leafGroup.value[3], { y: 180, rotationX: -60, duration: 0.5, opacity: 0 }, '<')
-        .fromTo(leafGroup.value[1], { opacity: 0 }, { x: 0, y: -180, opacity: 1, duration: 0.5 }, '<')
-        .to([leafGroup.value[0], leafGroup.value[1], leafGroup.value[2], leafGroup.value[3]], { x: 0, y: 0, opacity: 1, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.3 }, '>')
+        .to(leafGroup.value[3], { y: 200, rotationX: -90, duration: 0.3, opacity: 0 }, '<')
+        .to(leafGroup.value[0], { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.8 }, '<')
+        .fromTo(leafGroup.value[1], { opacity: 0 }, { x: 0, y: -200, opacity: 1, rotationX: 30, duration: 0.3 }, '<')
+        .to([leafGroup.value[1], leafGroup.value[2], leafGroup.value[3]], { x: 0, y: 0, opacity: 1, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.5 }, '>')
         .eventCallback('onComplete', () => {
           isAnimating.value = false
           sliderIndex.value = 0
@@ -171,7 +172,7 @@ function sliderHandler() {
       <div v-for="(item, index) in sliderList" :key="`background_${index}`" ref="backgroundCarousel" class="background-carousel">
         <img :src="item.background" :alt="`background${index + 1}`">
         <div class="label-slider">
-          <img :src="item.label" :alt="`fruit-label${index + 1}`" draggable="false">
+          <img :src="item.label" :alt="`fruit-label${index + 1}`" draggable="false" class="label-image">
         </div>
       </div>
 
@@ -258,7 +259,7 @@ function sliderHandler() {
 
 .leaf-image:nth-child(2) {
   position: absolute;
-  bottom: 60px;
+  bottom: 30px;
   right: -80px;
 }
 
@@ -306,8 +307,8 @@ function sliderHandler() {
 
 .shadow-image:nth-child(3) {
   position: absolute;
-  right: 180px;
-  bottom: 300px;
+  right: 200px;
+  bottom: 290px;
 }
 
 .background-carousel {
@@ -319,10 +320,11 @@ function sliderHandler() {
 .label-slider {
   position: absolute;
   inset: 0;
-  margin: auto;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -55px;
 }
 
 .fruits-slider {
