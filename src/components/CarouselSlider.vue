@@ -54,24 +54,7 @@ function sliderHandler() {
 
   const tl_leaf = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 0.8 } })
   const tl_shadow = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 0.8 } })
-  const tl_fruit = gsap.timeline(
-    {
-      defaults: {
-        ease: 'power4.in',
-        duration: 0.8,
-      },
-      onStart: () => {
-        fruitSlider.value.forEach((el) => {
-          el.style.zIndex = 3
-        })
-      },
-      onComplete: () => {
-        fruitSlider.value.forEach((el) => {
-          el.style.zIndex = 'auto'
-        })
-      },
-    },
-  )
+  const tl_fruit = gsap.timeline({ defaults: { ease: 'power4.in', duration: 0.8 } })
 
   if (isAnimating.value)
     return
@@ -92,7 +75,7 @@ function sliderHandler() {
       tl_leaf.to(leafGroup.value[0], { x: 60, y: 200, rotationZ: -50, duration: 0.3 })
         .to(leafGroup.value[1], { x: -120, y: -200, duration: 0.3 }, '<')
         .to(leafGroup.value[2], { x: 140, y: 170, duration: 0.5 })
-        .to(leafGroup.value[3], { x: -140, y: -110, duration: 0.5 }, '<')
+        .to(leafGroup.value[3], { x: -130, y: -120, duration: 0.5 }, '<')
         .eventCallback('onComplete', () => {
           isAnimating.value = false
           headerIndex.value = 1
@@ -212,7 +195,7 @@ function sliderHandler() {
 }
 .gallery {
   width: 1440px;
-  height: 1000px;
+  height: 1025px;
   overflow: hidden;
   position: relative;
   display: flex;
@@ -349,7 +332,7 @@ function sliderHandler() {
 
 .fruits-slider {
   position: absolute;
-  bottom: 0;
+  bottom: 55px;
   left: 0;
   display: flex;
   flex-direction: column-reverse;
@@ -357,7 +340,7 @@ function sliderHandler() {
 
 .fruits-figure {
   height: 1000px;
-  margin: 0;
+  margin:0;
   display: flex;
   justify-content: center;
   align-items: center;
