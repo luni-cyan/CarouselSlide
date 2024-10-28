@@ -114,7 +114,7 @@ function sliderHandler() {
         .to(shadowGroup.value[2], { right: 200, bottom: 290, opacity: 1, duration: 0.4 }, '>')
 
       tl_leaf.to(leafGroup.value[2], { x: -80, y: 0, rotationX: 45, duration: 0.5 })
-        .to(leafGroup.value[3], { y: 200, rotationX: -90, duration: 0.3, opacity: 0 }, '<')
+        .to(leafGroup.value[3], { y: 200, rotationX: -30, duration: 0.4, opacity: 0 }, '<')
         .to(leafGroup.value[0], { x: 0, y: 0, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.8 }, '<')
         .fromTo(leafGroup.value[1], { opacity: 0 }, { x: 0, y: -200, opacity: 1, rotationX: 30, duration: 0.3 }, '<')
         .to([leafGroup.value[1], leafGroup.value[2], leafGroup.value[3]], { x: 0, y: 0, opacity: 1, rotationX: 0, rotationY: 0, rotationZ: 0, duration: 0.5 }, '>')
@@ -144,40 +144,40 @@ function sliderHandler() {
 </script>
 
 <template>
-  <div class="container">
-    <div class="gallery" @click="sliderHandler">
-      <div class="main-area">
-        <div class="header">
-          <img ref="headerLogo" :src="headerList[headerIndex]" :alt="`header-logo${headerIndex + 1}`" class="header-logo" draggable="false">
-          <img src="../assets/Header/Frame-1.png" alt="header-frame1" class="header-frame1" draggable="false">
-          <img src="../assets/Header/Frame-2.png" alt="header-frame2" class="header-frame2" draggable="false">
+  <div class="area select-none">
+    <div class="gallery w-1440px h-1025px overflow-hidden flex pos-relative" @click="sliderHandler">
+      <div class="main-area pos-absolute inset-0 m-a mt--30px z-2 flex flex-col justify-evenly items-center">
+        <div class="header w-100% flex justify-between px-40px py-20px box-border">
+          <img ref="headerLogo" :src="headerList[headerIndex]" :alt="`header-logo${headerIndex + 1}`" class="header-logo flex-basis-100px" draggable="false">
+          <img src="../assets/Header/Frame-1.png" alt="header-frame1" class="header-frame1 flex-basis-750px" draggable="false">
+          <img src="../assets/Header/Frame-2.png" alt="header-frame2" class="header-frame2 flex-basis-250px" draggable="false">
         </div>
-        <div class="shadow">
+        <div class="shadow-group pos-absolute inset-0 m-a">
           <img v-for="(item, index) in shadowList" :key="`shadow_${index}`" ref="shadowGroup" :src="item" :alt="`shadow-image${index + 1}`" class="shadow-image" draggable="false">
         </div>
-        <div class="can">
-          <div class="leafs-area">
+        <div class="can w-320px h-600px mt-100px pos-relative">
+          <div class="leafs-area w-100% h-100% pos-absolute inset-0">
             <img v-for="(item, index) in leafList" :key="`leaf_${index}`" ref="leafGroup" :src="item" :alt="`leaf-image${index + 1}`" class="leaf-image" draggable="false">
           </div>
-          <div class="can-label">
-            <img ref="canLabels" src="../assets/Labels.png" alt="can-labels-image" class="can-labels-image" draggable="false">
+          <div class="can-label h-100% flex items-center">
+            <img ref="canLabels" src="../assets/Labels.png" alt="can-labels-image" class="can-labels-image w-960px h-a" draggable="false">
           </div>
-          <img src="../assets/can.png" alt="can-image" class="can-mask" draggable="false">
+          <img src="../assets/can.png" alt="can-image" class="can-mask w-100% mix-blend-multiply pos-absolute inset-0" draggable="false">
         </div>
         <div class="button">
           <img :src="sliderList[sliderIndex].button" :alt="`button-image${sliderIndex + 1}`" draggable="false">
         </div>
       </div>
 
-      <div v-for="(item, index) in sliderList" :key="`background_${index}`" ref="backgroundCarousel" class="background-carousel">
+      <div v-for="(item, index) in sliderList" :key="`background_${index}`" ref="backgroundCarousel" class="background-carousel w-100% flex-shrink-0 pos-relative">
         <img :src="item.background" :alt="`background${index + 1}`">
-        <div class="label-slider">
+        <div class="label-slider pos-absolute inset-0 m-a flex justify-center items-center mt--50px">
           <img :src="item.label" :alt="`fruit-label${index + 1}`" draggable="false" class="label-image">
         </div>
       </div>
 
-      <div class="fruits-slider">
-        <figure v-for="(item, index) in sliderList" :key="`fruit_${index}`" ref="fruitSlider" class="fruits-figure">
+      <div class="fruits-slider pos-absolute bottom-55px left-0 flex flex-col-reverse">
+        <figure v-for="(item, index) in sliderList" :key="`fruit_${index}`" ref="fruitSlider" class="fruits-figure h-1000px m-0 flex justify-center items-center">
           <img :src="item.fruit" :alt="`fruit-image${index + 1}`" draggable="false">
         </figure>
       </div>
@@ -186,69 +186,9 @@ function sliderHandler() {
 </template>
 
 <style scoped>
-.container{
-  user-select: none;
-}
-.gallery {
-  width: 1440px;
-  height: 1025px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-}
-
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 40px;
-  box-sizing: border-box;
-}
-
-.header-logo {
-  flex: 0 1 100px;
-}
-
-.header-frame1 {
-  flex: 0 1 750px;
-}
-
-.header-frame2 {
-  flex: 0 1 250px;
-}
-
-.can {
-  width: 320px;
-  height: 600px;
-  margin-top: 100px;
-  position: relative;
-}
-
-.can-mask {
-  width: 100%;
-  mix-blend-mode: multiply;
-  position: absolute;
-  inset: 0;
-}
-
 .can-label {
-  height: 100%;
   mask-image: url(../assets/can.png);
   mask-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-}
-
-.can-labels-image {
-  width: 960px;
-  height: auto;
-}
-
-.leafs-area {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0;
 }
 
 .leaf-image:nth-child(1) {
@@ -275,24 +215,6 @@ function sliderHandler() {
   left: 40px;
 }
 
-.main-area {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  margin-top: -30px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.shadow {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-}
-
 .shadow-image:nth-child(1) {
   position: absolute;
   right: 100px;
@@ -309,37 +231,5 @@ function sliderHandler() {
   position: absolute;
   right: 200px;
   bottom: 290px;
-}
-
-.background-carousel {
-  width: 100%;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.label-slider {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -55px;
-}
-
-.fruits-slider {
-  position: absolute;
-  bottom: 55px;
-  left: 0;
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-.fruits-figure {
-  height: 1000px;
-  margin:0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>
