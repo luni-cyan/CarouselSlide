@@ -1,6 +1,5 @@
 <script setup>
 import { gsap } from 'gsap'
-import { Flip } from 'gsap/all'
 import { ref } from 'vue'
 import apples from '../assets/Carousel_Slider_Image/Apples/Apples.png'
 import applesBackground from '../assets/Carousel_Slider_Image/Apples/Background_Slider.png'
@@ -49,8 +48,6 @@ const { headerLogo, leafGroup, shadowGroup, backgroundCarousel, canLabels, fruit
 const isAnimating = ref(false)
 
 function sliderHandler() {
-  const state = Flip.getState(headerLogo.value)
-
   const tl_leaf = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 0.8 } })
   const tl_shadow = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 0.8 } })
   const tl_fruit = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 0.8 } })
@@ -127,59 +124,55 @@ function sliderHandler() {
     default:
       console.warn('Invalid slider index:', sliderIndex.value)
   }
-  Flip.from(state, {
-    ease: 'circ.inOut',
-    duration: 0.8,
-    onStart: () => {
-      gsap.to(headerLogo.value, { opacity: 0.6, duration: 0.4, onComplete: () => {
-        if (sliderIndex.value === 2) {
-          headerIndex.value = 0
-        }
-        else { headerIndex.value = 1 }
-        gsap.to(headerLogo.value, { opacity: 1, duration: 0.4 })
-      } })
-    },
-  })
+
+  gsap.to(headerLogo.value, { opacity: 0.5, duration: 0.4, ease: 'circ.inOut', onComplete: () => {
+    if (sliderIndex.value === 2) {
+      headerIndex.value = 0
+    }
+    else { headerIndex.value = 1 }
+
+    gsap.to(headerLogo.value, { opacity: 1, duration: 0.4, ease: 'circ.inOut' })
+  } })
 }
 </script>
 
 <template>
   <div class="area select-none">
-    <div class="gallery w-1440px h-1025px overflow-hidden flex pos-relative" @click="sliderHandler">
-      <div class="main-area pos-absolute inset-0 m-a mt--30px z-2 flex flex-col justify-evenly items-center">
+    <div class="gallery w-1440px h-1025px overflow-hidden flex relative" @click="sliderHandler">
+      <div v-for="(item, index) in sliderList" :key="`background_${index}`" ref="backgroundCarousel" class="background-carousel w-100% relative">
+        <img :src="item.background" :alt="`background${index + 1}`">
+        <div class="label-slider absolute inset-0 m-a flex justify-center items-center mt--50px">
+          <img :src="item.label" :alt="`fruit-label${index + 1}`" draggable="false" class="label-image">
+        </div>
+      </div>
+
+      <div class="fruits-slider absolute bottom-55px left-0 flex flex-col-reverse">
+        <figure v-for="(item, index) in sliderList" :key="`fruit_${index}`" ref="fruitSlider" class="fruits-figure h-1000px m-0 flex justify-center items-center">
+          <img :src="item.fruit" :alt="`fruit-image${index + 1}`" draggable="false">
+        </figure>
+      </div>
+
+      <div class="main-area absolute inset-0 m-a mt--30px flex flex-col justify-evenly items-center">
         <div class="header w-100% flex justify-between px-40px py-20px box-border">
           <img ref="headerLogo" :src="headerList[headerIndex]" :alt="`header-logo${headerIndex + 1}`" class="header-logo flex-basis-100px" draggable="false">
           <img src="../assets/Header/Frame-1.png" alt="header-frame1" class="header-frame1 flex-basis-750px" draggable="false">
           <img src="../assets/Header/Frame-2.png" alt="header-frame2" class="header-frame2 flex-basis-250px" draggable="false">
         </div>
-        <div class="shadow-group pos-absolute inset-0 m-a">
+        <div class="shadow-group absolute inset-0 m-a">
           <img v-for="(item, index) in shadowList" :key="`shadow_${index}`" ref="shadowGroup" :src="item" :alt="`shadow-image${index + 1}`" class="shadow-image" draggable="false">
         </div>
-        <div class="can w-320px h-600px mt-100px pos-relative">
-          <div class="leafs-area w-100% h-100% pos-absolute inset-0">
+        <div class="can w-320px h-600px mt-100px relative">
+          <div class="leafs-area w-100% h-100% absolute inset-0">
             <img v-for="(item, index) in leafList" :key="`leaf_${index}`" ref="leafGroup" :src="item" :alt="`leaf-image${index + 1}`" class="leaf-image" draggable="false">
           </div>
-          <div class="can-label h-100% flex items-center">
-            <img ref="canLabels" src="../assets/Labels.png" alt="can-labels-image" class="can-labels-image w-960px h-a" draggable="false">
+          <div class="can-label h-100% flex">
+            <img ref="canLabels" src="../assets/Labels.png" alt="can-labels-image" class="can-labels-image w-960px flex-shrink-0 object-cover" draggable="false">
           </div>
-          <img src="../assets/can.png" alt="can-image" class="can-mask w-100% mix-blend-multiply pos-absolute inset-0" draggable="false">
+          <img src="../assets/can.png" alt="can-image" class="can-mask mix-blend-multiply absolute inset-0" draggable="false">
         </div>
         <div class="button">
           <img :src="sliderList[sliderIndex].button" :alt="`button-image${sliderIndex + 1}`" draggable="false">
         </div>
-      </div>
-
-      <div v-for="(item, index) in sliderList" :key="`background_${index}`" ref="backgroundCarousel" class="background-carousel w-100% flex-shrink-0 pos-relative">
-        <img :src="item.background" :alt="`background${index + 1}`">
-        <div class="label-slider pos-absolute inset-0 m-a flex justify-center items-center mt--50px">
-          <img :src="item.label" :alt="`fruit-label${index + 1}`" draggable="false" class="label-image">
-        </div>
-      </div>
-
-      <div class="fruits-slider pos-absolute bottom-55px left-0 flex flex-col-reverse">
-        <figure v-for="(item, index) in sliderList" :key="`fruit_${index}`" ref="fruitSlider" class="fruits-figure h-1000px m-0 flex justify-center items-center">
-          <img :src="item.fruit" :alt="`fruit-image${index + 1}`" draggable="false">
-        </figure>
       </div>
     </div>
   </div>
